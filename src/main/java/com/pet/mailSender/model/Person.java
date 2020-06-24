@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 public class Person implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
     private Integer id;
@@ -25,7 +25,7 @@ public class Person implements Serializable {
     @Setter
     private String email;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne/*(*//*cascade = {CascadeType.PERSIST, CascadeType.REMOVE}*//*)*/
     @JoinColumn(name = "people_list_id")
     @Getter
     @Setter

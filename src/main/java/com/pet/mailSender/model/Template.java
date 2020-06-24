@@ -1,6 +1,5 @@
 package com.pet.mailSender.model;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.Entity;
@@ -51,5 +50,16 @@ public class Template implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, subject, body, signature);
+    }
+
+    @Override
+    public String toString() {
+        return "Template{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", signature='" + signature + '\'' +
+                '}';
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,10 +23,10 @@ public class PeopleList implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "peopleList", cascade = CascadeType.ALL)
-    private Set<Person> people;
+    @OneToMany(mappedBy = "peopleList", cascade = CascadeType.PERSIST)
+    private Set<Person> people = new HashSet<>();
 
-    @OneToOne(mappedBy = "peopleList", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "peopleList", cascade = CascadeType.MERGE)
     @Getter
     @Setter
     private Campaign campaign;

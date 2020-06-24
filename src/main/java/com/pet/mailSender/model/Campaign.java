@@ -22,7 +22,7 @@ public class Campaign implements Serializable {
     @Setter
     private Long delay;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "people_list_id")
     @Getter
     @Setter
