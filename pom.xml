@@ -8,6 +8,7 @@
     <artifactId>com.pet.mailsender</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+
     <build>
         <plugins>
             <plugin>
@@ -26,93 +27,86 @@
         <h2.version>1.4.190</h2.version>
         <hibernate.version>5.1.0.Final</hibernate.version>
         <spring.version>5.2.6.RELEASE</spring.version>
+        <junit.version>3.8.1</junit.version>
+        <tomcat.jasper.version>9.0.29</tomcat.jasper.version>
+        <jstl.version>1.2</jstl.version>
+        <springboot.version>2.0.7.RELEASE</springboot.version>
+        <javax.mail.version>1.5.0-b01</javax.mail.version>
+        <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Servlet Library -->
-        <!-- http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-       <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.1</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <version>9.0.29</version>
+            <version>${tomcat.jasper.version}</version>
         </dependency>
 
-        <!-- Spring dependencies -->
-        <!-- http://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- http://mvnrepository.com/artifact/org.springframework/spring-web -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- http://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.0.7.RELEASE</version>
+            <version>${springboot.version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.5.0-b01</version>
+            <version>${javax.mail.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -1,4 +1,3 @@
-/*
 package com.pet.mailSender.controllers;
 
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,7 @@ public class IndexController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        System.out.println("fdfgd");
+        model.addAttribute("attr","this is value");
         return "index";
     }
 }
-*/
