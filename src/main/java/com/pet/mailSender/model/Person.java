@@ -31,6 +31,11 @@ public class Person implements Serializable {
     @Setter
     private PeopleList peopleList;
 
+    @Enumerated(EnumType.STRING)
+    @Getter
+    @Setter
+    private EmailStatus emailStatus;
+
     @Override
     public String toString() {
         return "Person{" +
@@ -38,6 +43,7 @@ public class Person implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", status='" + emailStatus + '\'' +
                 '}';
     }
 
