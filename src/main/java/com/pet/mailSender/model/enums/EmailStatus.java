@@ -1,7 +1,5 @@
-package com.pet.mailSender.model;
+package com.pet.mailSender.model.enums;
 
-import javax.validation.constraints.Email;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

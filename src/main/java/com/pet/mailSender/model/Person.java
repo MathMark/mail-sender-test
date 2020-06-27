@@ -1,5 +1,6 @@
 package com.pet.mailSender.model;
 
+import com.pet.mailSender.model.enums.EmailStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;

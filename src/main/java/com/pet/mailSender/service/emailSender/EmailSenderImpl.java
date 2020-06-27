@@ -1,12 +1,10 @@
 package com.pet.mailSender.service.emailSender;
 
 import com.pet.mailSender.dao.Dao;
-import com.pet.mailSender.dao.imp.CampaignDao;
-import com.pet.mailSender.dao.imp.PersonDao;
 import com.pet.mailSender.model.Campaign;
-import com.pet.mailSender.model.EmailStatus;
+import com.pet.mailSender.model.enums.CampaignStatus;
+import com.pet.mailSender.model.enums.EmailStatus;
 import com.pet.mailSender.model.Person;
-import com.pet.mailSender.model.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -49,6 +47,11 @@ public class EmailSenderImpl implements EmailSender {
                     }
                 });
 
+        int sentCount = 0;
+        int rejectedCount = 0;
+
+        campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
+
         for (Person person : campaign.getPeopleList().getPeople()) {
             try {
                 Message message = new MimeMessage(session);
@@ -63,13 +66,21 @@ public class EmailSenderImpl implements EmailSender {
                 Transport.send(message);
                 person.setEmailStatus(EmailStatus.SENT);
                 Thread.sleep(campaign.getDelay());
+
+                sentCount ++;
+                campaign.getEmailStatistics().setSentEmailsCount(sentCount);
+
                 campaignDao.update(campaign);
 
             } catch (MessagingException | InterruptedException e) {
+                rejectedCount ++;
                 person.setEmailStatus(EmailStatus.REJECTED);
+                campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
             }
 
         }
+
+        campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.FINISHED);
 
     }
 }

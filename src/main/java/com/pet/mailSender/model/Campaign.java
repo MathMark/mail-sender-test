@@ -1,5 +1,6 @@
 package com.pet.mailSender.model;
 
+import com.pet.mailSender.model.enums.CampaignStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,6 +35,12 @@ public class Campaign implements Serializable {
     @Setter
     private Template template;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "email_statistics_id")
+    @Getter
+    @Setter
+    private EmailStatistics emailStatistics;
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -42,6 +49,7 @@ public class Campaign implements Serializable {
                 ", delay=" + delay +
                 ", peopleList=" + peopleList +
                 ", template=" + template +
+                ", emailStatistics=" + emailStatistics +
                 '}';
     }
 

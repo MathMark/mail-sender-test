@@ -1,11 +1,10 @@
 package com.pet.mailSender;
 
 import com.pet.mailSender.dao.Dao;
-import com.pet.mailSender.dao.imp.CampaignDao;
-import com.pet.mailSender.dao.imp.PeopleListDao;
 import com.pet.mailSender.model.*;
+import com.pet.mailSender.model.enums.CampaignStatus;
+import com.pet.mailSender.model.enums.EmailStatus;
 import com.pet.mailSender.service.emailSender.EmailSender;
-import com.pet.mailSender.service.emailSender.EmailSenderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
@@ -60,10 +59,14 @@ public class SpringBootApp {
 
         Campaign campaign = new Campaign();
         campaign.setTitle("Test campaign");
-        campaign.setDelay(10000L);
+        campaign.setDelay(100L);
         campaign.setTemplate(template);
 
         campaign.setPeopleList(peopleList);
+
+        EmailStatistics emailStatistics = new EmailStatistics();
+        emailStatistics.setCampaignStatus(CampaignStatus.NEW);
+        campaign.setEmailStatistics(emailStatistics);
 
 
         FileWriter fileWriter = new FileWriter("output.txt");
