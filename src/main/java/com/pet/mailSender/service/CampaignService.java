@@ -17,4 +17,8 @@ public class CampaignService {
     public List<Campaign> getAll(){
         return campaignDao.getAll();
     }
+
+    public void save(Campaign campaign){
+        campaignDao.add(campaign);
+    }
 }

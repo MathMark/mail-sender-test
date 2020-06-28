@@ -2,9 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Email Sender</title>
+    <jsp:include page="header.jsp" />
 </head>
 <body>
-<p>Hello World!</p>
+<%--TODO--%>
 </body>
 </html>

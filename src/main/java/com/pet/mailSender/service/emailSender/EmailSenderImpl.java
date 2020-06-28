@@ -63,7 +63,7 @@ public class EmailSenderImpl implements EmailSender {
                 message.setSubject(campaign.getTemplate().getSubject());
                 message.setContent(campaign.getTemplate().getBody(), "text/html");
 
-                Transport.send(message);
+                //Transport.send(message);
                 person.setEmailStatus(EmailStatus.SENT);
                 Thread.sleep(campaign.getDelay());
 
