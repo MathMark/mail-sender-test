@@ -14,7 +14,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.ResourceBundle;
+
 
 @SpringBootApplication
 public class SpringBootApp {
@@ -25,6 +28,8 @@ public class SpringBootApp {
 
     @Autowired
     private EmailSender emailSender;
+
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("gmailAuth");
 
     public static void main(String...args) throws IOException {
 
@@ -61,6 +66,14 @@ public class SpringBootApp {
         campaign.setTitle("Test campaign");
         campaign.setDelay(100L);
         campaign.setTemplate(template);
+
+        Account account = new Account();
+        account.setEmail(resourceBundle.getString("username"));
+        account.setFirstName("Vadim");
+        account.setLastName("Martsun");
+        account.setPassword(resourceBundle.getString("password"));
+
+        campaign.setAccount(account);
 
         campaign.setPeopleList(peopleList);
 

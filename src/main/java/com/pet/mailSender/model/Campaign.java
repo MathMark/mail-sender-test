@@ -41,6 +41,12 @@ public class Campaign implements Serializable {
     @Setter
     private EmailStatistics emailStatistics;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "account_id")
+    @Getter
+    @Setter
+    private Account account;
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -50,6 +56,7 @@ public class Campaign implements Serializable {
                 ", peopleList=" + peopleList +
                 ", template=" + template +
                 ", emailStatistics=" + emailStatistics +
+                ", account=" + account +
                 '}';
     }
 

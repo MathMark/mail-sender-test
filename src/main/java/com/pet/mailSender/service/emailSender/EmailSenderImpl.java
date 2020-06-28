@@ -13,14 +13,9 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 @Component
 public class EmailSenderImpl implements EmailSender {
-    private static ResourceBundle resource = ResourceBundle.getBundle("gmailAuth");
-
-    private final String username = resource.getString("username");
-    private final String password = resource.getString("password");
 
     private Properties properties;
 
@@ -43,7 +38,7 @@ public class EmailSenderImpl implements EmailSender {
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(campaign.getAccount().getEmail(), campaign.getAccount().getPassword());
                     }
                 });
 
@@ -55,7 +50,7 @@ public class EmailSenderImpl implements EmailSender {
         for (Person person : campaign.getPeopleList().getPeople()) {
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(resource.getString("username")));
+                message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
                 message.setRecipients(
                         Message.RecipientType.TO,
                         InternetAddress.parse(person.getEmail())
