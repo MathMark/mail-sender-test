@@ -11,6 +11,10 @@
             padding: 20px;
         }
         .campaignContainer{
+            border-style: solid;
+            border-width: 1px;
+            border-color: #bbbdb9;
+            border-radius: 10px;
             width: 100%;
             background-color: #ecf1f1;
             color: #595a59;
@@ -118,6 +122,9 @@
             </div>
         </div>
     </c:forEach>
+    <div class="campaignControlPanel">
+        <button type="button" class="btn btn-primary" onclick="location.href='campaigns/addCampaign'">Add new campaign</button>
+    </div>
 </div>
 </body>
 </html>
