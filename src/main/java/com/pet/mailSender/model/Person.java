@@ -1,5 +1,6 @@
 package com.pet.mailSender.model;
 
+import com.pet.mailSender.model.annotations.CsvField;
 import com.pet.mailSender.model.enums.EmailStatus;
 import lombok.*;
 import javax.persistence.*;
@@ -16,14 +17,17 @@ public class Person implements Serializable {
 
     @Getter
     @Setter
+    @CsvField(columnName = "First Name")
     private String firstName;
 
     @Getter
     @Setter
+    @CsvField(columnName = "Last Name")
     private String lastName;
 
     @Getter
     @Setter
+    @CsvField(columnName = "Email")
     private String email;
 
     @ManyToOne/*(*//*cascade = {CascadeType.PERSIST, CascadeType.REMOVE}*//*)*/
@@ -36,6 +40,10 @@ public class Person implements Serializable {
     @Getter
     @Setter
     private EmailStatus emailStatus;
+
+    public Person(){
+        this.emailStatus = EmailStatus.NEW;
+    }
 
     @Override
     public String toString() {
