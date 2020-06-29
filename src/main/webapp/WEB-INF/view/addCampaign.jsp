@@ -34,7 +34,8 @@
             padding: 15px;
             background-color: #ebebeb;
         }
-        .campaignReceiversContainer{
+
+        .campaignReceiversContainer {
             margin-top: 15px;
         }
 
@@ -46,10 +47,11 @@
             font-size: medium;
         }
 
-        .accountFirstAndLastName{
+        .accountFirstAndLastName {
             width: 100%;
             display: inline-block;
         }
+
         .accountCredentials {
             width: 100%;
         }
@@ -58,7 +60,8 @@
             display: inline-block;
             width: 49%;
         }
-        .accountNameElement{
+
+        .accountNameElement {
             display: inline-block;
             width: 49%;
             margin-bottom: 10px;
@@ -67,15 +70,18 @@
         .templateElement {
             margin-bottom: 5px;
         }
-        .campaignBottomElement{
+
+        .campaignBottomElement {
             display: inline-block;
         }
-        h1{
+
+        h1 {
             text-align: center;
             font-size: medium;
             color: #595a59;
         }
-        h2{
+
+        h2 {
             text-align: center;
             font-size: small;
             color: #595a59;
@@ -83,7 +89,7 @@
     </style>
 </head>
 <body>
-<form:form modelAttribute="campaignAttribute" action="saveCampaign" method="post">
+<form:form modelAttribute="campaignAttribute" action="saveCampaign" method="post" enctype="multipart/form-data">
     <div class="campaignContainer">
         <h1>Campaign</h1>
         <div class="campaignTitle">
@@ -148,6 +154,8 @@
         </div>
         <div class="campaignReceiversContainer">
             <div class="campaignBottomElement">
+                <label>Receivers: </label>
+                <input type="file" name="file"/>
             </div>
             <div class="campaignBottomElement">
                 <div class="form-group">
