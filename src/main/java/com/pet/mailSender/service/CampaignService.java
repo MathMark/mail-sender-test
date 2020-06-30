@@ -4,6 +4,7 @@ import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
 import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.emailSender.EmailSender;
+import com.pet.mailSender.service.emailSender.EmailSenderParallel;
 import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,9 @@ public class CampaignService {
     @Autowired
     private EmailSender emailSender;
 
+    @Autowired
+    private EmailSenderParallel emailSenderParallel;
+
     public List<Campaign> getAll(){
         return campaignDao.getAll();
     }
@@ -40,6 +44,14 @@ public class CampaignService {
         Campaign campaign = campaignDao.getById(campaignId);
         if(campaign != null){
             emailSender.sendEmails(campaign);
+        }
+    }
+
+    public void runCampaignParallel(int campaignId){
+        Campaign campaign = campaignDao.getById(campaignId);
+        if(campaign != null){
+            emailSenderParallel.setCampaign(campaign);
+            emailSenderParallel.start();
         }
     }
 }

@@ -46,7 +46,7 @@ public class CampaignController {
     @RequestMapping(value = "/run/{campaignId}")
     public String runCampaign(@PathVariable("campaignId") int campaignId, Model model){
         System.out.println(campaignId);
-        campaignService.runCampaign(campaignId);
+        campaignService.runCampaignParallel(campaignId);
         return "redirect:/campaigns";
     }
 }

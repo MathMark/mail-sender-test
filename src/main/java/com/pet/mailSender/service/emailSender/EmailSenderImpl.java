@@ -2,6 +2,7 @@ package com.pet.mailSender.service.emailSender;
 
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
+import com.pet.mailSender.model.EmailStatistics;
 import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.enums.EmailStatus;
 import com.pet.mailSender.model.Person;
@@ -18,7 +19,6 @@ import java.util.Properties;
 public class EmailSenderImpl implements EmailSender {
 
     private Properties properties;
-
 
     @Autowired
     @Qualifier("campaignDao")
@@ -49,33 +49,38 @@ public class EmailSenderImpl implements EmailSender {
 
         for (Person person : campaign.getPeopleList().getPeople()) {
             try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
-                message.setRecipients(
-                        Message.RecipientType.TO,
-                        InternetAddress.parse(person.getEmail())
-                );
-                message.setSubject(campaign.getTemplate().getSubject());
-                message.setContent(campaign.getTemplate().getBody(), "text/html");
+                EmailStatus emailStatus = person.getEmailStatus();
 
-                //Transport.send(message);
-                person.setEmailStatus(EmailStatus.SENT);
+                if(emailStatus == null || (!emailStatus.equals(EmailStatus.SENT))){
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
+                    message.setRecipients(
+                            Message.RecipientType.TO,
+                            InternetAddress.parse(person.getEmail())
+                    );
+                    message.setSubject(campaign.getTemplate().getSubject());
+                    message.setContent(campaign.getTemplate().getBody(), "text/html");
 
-                Thread.sleep(campaign.getDelay());
-                sentCount ++;
-                campaign.getEmailStatistics().setSentEmailsCount(sentCount);
+                    Transport.send(message);
+                    person.setEmailStatus(EmailStatus.SENT);
 
-                campaignDao.update(campaign);
+                    Thread.sleep(campaign.getDelay());
+                    sentCount ++;
+                    campaign.getEmailStatistics().setSentEmailsCount(sentCount);
 
-            } catch (MessagingException | InterruptedException e) {
+                    campaignDao.update(campaign);
+                }
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
                 rejectedCount ++;
                 person.setEmailStatus(EmailStatus.REJECTED);
                 campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
+            }catch (InterruptedException e){
+                e.printStackTrace();
             }
 
         }
-
         campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.FINISHED);
-
     }
 }
