@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <jsp:include page="header.jsp" />
@@ -52,6 +53,7 @@
 
 <div class="mainCampaignContainer">
     <c:forEach items="${campaigns}" var="campaign">
+        <form:form class="tr" modelAttribute="campaignAttribute">
         <div class="campaignContainer">
             <div class="campaignElement">
                 <div class="campaignTitleElement">
@@ -66,7 +68,7 @@
                     </div>
                 </div>
                 <div class="campaignTitleElement">
-                    <button type="button" class="btn btn-light">Run</button>
+                    <button type="button" class="btn btn-light" onclick="location.href='campaigns/run/${campaign.id}'">Run</button>
                 </div>
                 <div class="campaignTitleElement">
                     <button type="button" class="btn btn-light">View</button>
@@ -123,6 +125,7 @@
                 </div>
             </div>
         </div>
+        </form:form>
     </c:forEach>
     <div class="campaignControlPanel">
         <button type="button" class="btn btn-primary" onclick="location.href='campaigns/addCampaign'">Create campaign</button>

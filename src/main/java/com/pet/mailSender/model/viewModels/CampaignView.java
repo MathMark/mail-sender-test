@@ -1,17 +1,15 @@
 package com.pet.mailSender.model.viewModels;
 
+import com.pet.mailSender.model.Account;
+import com.pet.mailSender.model.Template;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class CampaignView {
     private String title;
-    private String accountUsername;
-    private String accountPassword;
-    private String accountFirstName;
-    private String accountLastName;
-    private String templateSubject;
-    private String templateBody;
-    private String templateSignature;
-    private String peopleListFileName;
+    private Account account;
+    private Template template;
+    private MultipartFile peopleList;
     private String delay;
 }

@@ -1,6 +1,8 @@
 package com.pet.mailSender.service.parsers.csvParser;
 
 import com.pet.mailSender.model.annotations.CsvField;
+import org.springframework.stereotype.Component;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.BufferedReader;
@@ -11,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+@Component
 public class CsvParser<T> implements Parser<T> {
 
     private static final String COMMA = ",";
@@ -34,7 +37,7 @@ public class CsvParser<T> implements Parser<T> {
                                 .invoke(instance, records.get(i).get(j));
                     }
                 }
-                objects.add((T)instance);
+                objects.add((T) instance);
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IntrospectionException | InvocationTargetException e) {
             e.printStackTrace();

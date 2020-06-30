@@ -3,6 +3,7 @@ package com.pet.mailSender.service;
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
 import com.pet.mailSender.model.viewModels.CampaignView;
+import com.pet.mailSender.service.emailSender.EmailSender;
 import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,9 @@ public class CampaignService {
     @Autowired
     private CampaignMapper campaignMapper;
 
+    @Autowired
+    private EmailSender emailSender;
+
     public List<Campaign> getAll(){
         return campaignDao.getAll();
     }
@@ -30,5 +34,12 @@ public class CampaignService {
     public void saveAsCampaign(CampaignView campaignView){
         Campaign campaign = campaignMapper.getCampaign(campaignView);
         save(campaign);
+    }
+
+    public void runCampaign(int campaignId){
+        Campaign campaign = campaignDao.getById(campaignId);
+        if(campaign != null){
+            emailSender.sendEmails(campaign);
+        }
     }
 }

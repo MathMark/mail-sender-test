@@ -105,12 +105,12 @@
             <div class="accountFirstAndLastName">
                 <div class="accountNameElement">
                     <div class="input-group">
-                        <form:input cssClass="form-control" path="accountFirstName" placeHolder="First name"/>
+                        <form:input cssClass="form-control" path="account.firstName" placeHolder="First name"/>
                     </div>
                 </div>
                 <div class="accountNameElement">
                     <div class="input-group">
-                        <form:input cssClass="form-control" path="accountLastName" placeHolder="Last name"/>
+                        <form:input cssClass="form-control" path="account.lastName" placeHolder="Last name"/>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Username</span>
                         </div>
-                        <form:input cssClass="form-control" path="accountUsername" placeHolder="username@gmail.com"/>
+                        <form:input cssClass="form-control" path="account.email" placeHolder="username@gmail.com"/>
                     </div>
                 </div>
                 <div class="accountCredential">
@@ -128,7 +128,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Password</span>
                         </div>
-                        <form:input type="password" cssClass="form-control" path="accountPassword"/>
+                        <form:input type="password" cssClass="form-control" path="account.password"/>
                     </div>
                 </div>
             </div>
@@ -140,15 +140,15 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Subject</span>
                     </div>
-                    <form:input cssClass="form-control" path="templateSubject"/>
+                    <form:input cssClass="form-control" path="template.subject"/>
                 </div>
             </div>
             <div class="templateElement">
-                <form:textarea path="templateBody" cssClass="form-control" placeholder="Email body"/>
+                <form:textarea path="template.body" cssClass="form-control" placeholder="Email body"/>
             </div>
             <div class="templateElement">
                 <div class="templateElement">
-                    <form:textarea path="templateSignature" cssClass="form-control" placeholder="Signature"/>
+                    <form:textarea path="template.signature" cssClass="form-control" placeholder="Signature"/>
                 </div>
             </div>
         </div>

@@ -60,8 +60,8 @@ public class EmailSenderImpl implements EmailSender {
 
                 //Transport.send(message);
                 person.setEmailStatus(EmailStatus.SENT);
-                Thread.sleep(campaign.getDelay());
 
+                Thread.sleep(campaign.getDelay());
                 sentCount ++;
                 campaign.getEmailStatistics().setSentEmailsCount(sentCount);
 

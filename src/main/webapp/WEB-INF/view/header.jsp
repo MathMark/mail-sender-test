@@ -34,7 +34,7 @@
                 <a class="nav-link" href="/campaigns">Campaigns</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/templates">Templates</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/templates">Templates</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/peopleList">Receivers</a>
