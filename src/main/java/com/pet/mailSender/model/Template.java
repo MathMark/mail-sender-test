@@ -2,10 +2,8 @@ package com.pet.mailSender.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -26,10 +24,12 @@ public class Template implements Serializable {
 
     @Getter
     @Setter
+    @Column(columnDefinition = "varchar2")
     private String body;
 
     @Getter
     @Setter
+    @Column(columnDefinition = "varchar2")
     private String signature;
 
     @OneToMany(mappedBy = "template")

@@ -14,9 +14,6 @@
         .campaignTitleElement{
             display: inline-block;
         }
-        #campaignTitle{
-            margin-right: 10px;
-        }
         .campaignElement{
             width: 24%;
             display: inline-block;
