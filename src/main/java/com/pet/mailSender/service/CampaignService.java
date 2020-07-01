@@ -9,6 +9,7 @@ import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -29,6 +30,10 @@ public class CampaignService {
 
     public List<Campaign> getAll(){
         return campaignDao.getAll();
+    }
+
+    public Campaign getCampaignById(int id){
+        return campaignDao.getById(id);
     }
 
     public void save(Campaign campaign){

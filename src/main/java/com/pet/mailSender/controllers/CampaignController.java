@@ -6,7 +6,6 @@ import com.pet.mailSender.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,5 +47,16 @@ public class CampaignController {
         System.out.println(campaignId);
         campaignService.runCampaignParallel(campaignId);
         return "redirect:/campaigns";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/view/{campaignId}")
+    public ModelAndView showCampaign(@PathVariable("campaignId") int campaignId, Model model){
+        Campaign campaign = campaignService.getCampaignById(campaignId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("campaign", campaign);
+        modelAndView.setViewName("viewCampaign");
+
+        return modelAndView;
     }
 }
