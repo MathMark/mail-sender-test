@@ -33,6 +33,14 @@
         .campaignControlPanel{
             right: 10px;
         }
+        /*#progress-bar{
+            width: 10%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        #controlButtons{
+            width: 10%;
+        }*/
     </style>
 
 </head>
@@ -47,7 +55,7 @@
                     <div class="card-body">
                         <h5 class="card-title"></h5>
                         <div class="campaignElement">
-                            <div class="campaignTitleElement">
+                            <div class="campaignElement">
                                 <button type="button" class="btn btn-light" onclick="location.href='campaigns/run/${campaign.id}'">Run</button>
                             </div>
                             <div class="campaignTitleElement">
@@ -56,6 +64,9 @@
                         </div>
                         <div class="campaignElement">
                             <c:out value="${campaign.emailStatistics.campaignStatus}"/>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: ${campaign.emailStatistics.progress}%" aria-valuenow="${campaign.emailStatistics.progress}" aria-valuemin="0" aria-valuemax="100"><c:out value="${campaign.emailStatistics.progress}"/>%</div>
+                            </div>
                         </div>
                         <div class="campaignElement">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-bounding-box" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -6,6 +6,7 @@ import com.pet.mailSender.model.EmailStatistics;
 import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.enums.EmailStatus;
 import com.pet.mailSender.model.Person;
+import com.pet.mailSender.service.utilities.ProgressCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,9 @@ public class EmailSenderImpl implements EmailSender {
     @Autowired
     @Qualifier("campaignDao")
     private Dao<Campaign> campaignDao;
+
+    @Autowired
+    private ProgressCalculator progressCalculator;
 
     public EmailSenderImpl() {
         properties = new Properties();
@@ -61,14 +65,16 @@ public class EmailSenderImpl implements EmailSender {
                     message.setSubject(campaign.getTemplate().getSubject());
                     message.setContent(campaign.getTemplate().getBody(), "text/html");
 
-                    Transport.send(message);
+                    //Transport.send(message);
                     person.setEmailStatus(EmailStatus.SENT);
-
-                    Thread.sleep(campaign.getDelay());
                     sentCount ++;
                     campaign.getEmailStatistics().setSentEmailsCount(sentCount);
 
+                    campaign.getEmailStatistics().setProgress(progressCalculator.getProgress(campaign.getPeopleList().getPeople().size(),
+                            campaign.getEmailStatistics().getSentEmailsCount()));
+
                     campaignDao.update(campaign);
+                    Thread.sleep(campaign.getDelay());
                 }
 
             } catch (MessagingException e) {

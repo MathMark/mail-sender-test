@@ -3,7 +3,6 @@
 <html>
 <head>
     <jsp:include page="header.jsp"/>
-    \
     <style>
         .card-body {
             text-align: left;

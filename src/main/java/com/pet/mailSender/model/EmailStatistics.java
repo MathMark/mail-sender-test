@@ -34,6 +34,10 @@ public class EmailStatistics {
     @Setter
     private Campaign campaign;
 
+    @Getter
+    @Setter
+    private int progress;
+
     @Override
     public String toString() {
         return "EmailStatistics{" +
