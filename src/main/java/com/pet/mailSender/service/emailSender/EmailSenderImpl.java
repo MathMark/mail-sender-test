@@ -2,7 +2,6 @@ package com.pet.mailSender.service.emailSender;
 
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
-import com.pet.mailSender.model.EmailStatistics;
 import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.enums.EmailStatus;
 import com.pet.mailSender.model.Person;
@@ -10,7 +9,6 @@ import com.pet.mailSender.service.utilities.ProgressCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -65,7 +63,7 @@ public class EmailSenderImpl implements EmailSender {
                     message.setSubject(campaign.getTemplate().getSubject());
                     message.setContent(campaign.getTemplate().getBody(), "text/html");
 
-                    //Transport.send(message);
+                    Transport.send(message);
                     person.setEmailStatus(EmailStatus.SENT);
                     sentCount ++;
                     campaign.getEmailStatistics().setSentEmailsCount(sentCount);
