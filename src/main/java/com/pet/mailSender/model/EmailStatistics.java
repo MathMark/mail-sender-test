@@ -29,7 +29,7 @@ public class EmailStatistics {
     @Setter
     private CampaignStatus campaignStatus;
 
-    @OneToOne(mappedBy = "emailStatistics", cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "emailStatistics")
     @Getter
     @Setter
     private Campaign campaign;
