@@ -38,6 +38,9 @@
             </c:forEach>
         </div>
     </c:forEach>
+    <div class="campaignControlPanel">
+        <button type="button" class="btn btn-primary" onclick="location.href='templates/addTemplate'">Create template</button>
+    </div>
 </div>
 </body>
 </html>
