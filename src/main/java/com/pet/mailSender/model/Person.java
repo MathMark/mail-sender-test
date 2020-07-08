@@ -61,14 +61,11 @@ public class Person implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id.equals(person.id) &&
-                firstName.equals(person.firstName) &&
-                Objects.equals(lastName, person.lastName) &&
-                email.equals(person.email);
+        return email.equals(person.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email);
+        return Objects.hash(email);
     }
 }
