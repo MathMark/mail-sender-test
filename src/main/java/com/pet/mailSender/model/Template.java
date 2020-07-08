@@ -23,10 +23,12 @@ public class Template implements Serializable {
 
     @Getter
     @Setter
+    @Column(columnDefinition = "TEXT") //mysql type
     private String body;
 
     @Getter
     @Setter
+    @Column(columnDefinition = "TEXT")//mysql type
     private String signature;
 
     @OneToMany(mappedBy = "template")
