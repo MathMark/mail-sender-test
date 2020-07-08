@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "campaign")
 public class Campaign implements Serializable {
     @Id
     @GeneratedValue

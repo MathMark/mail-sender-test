@@ -23,12 +23,12 @@ public class Template implements Serializable {
 
     @Getter
     @Setter
-    @Column(columnDefinition = "varchar2")
+    /*@Column(columnDefinition = "varchar2")*/
     private String body;
 
     @Getter
     @Setter
-    @Column(columnDefinition = "varchar2")
+    /*@Column(columnDefinition = "varchar2")*/
     private String signature;
 
     @OneToMany(mappedBy = "template")

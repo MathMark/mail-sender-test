@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Person implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Getter
     @Setter
     private Integer id;
@@ -30,7 +30,7 @@ public class Person implements Serializable {
     @CsvField(columnName = "Email")
     private String email;
 
-    @ManyToOne/*(*//*cascade = {CascadeType.PERSIST, CascadeType.REMOVE}*//*)*/
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "people_list_id")
     @Getter
     @Setter
