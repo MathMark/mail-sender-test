@@ -11,13 +11,12 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Properties;
+import java.util.*;
 
 @Service
 @Scope("prototype")
@@ -59,23 +58,26 @@ public class EmailSender implements Runnable {
 
         campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
 
-        for (Person person : campaign.getPeople()) {
-            try {
-                EmailStatus emailStatus = person.getEmailStatus();
+        Person[] people = new Person[campaign.getPeople().size()];
+        campaign.getPeople().toArray(people);
+
+        for (int i = 0; i < people.length; i++) {
+                try {
+                EmailStatus emailStatus = people[i].getEmailStatus();
 
                 if(emailStatus == null || (!emailStatus.equals(EmailStatus.SENT))){
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
                     message.setRecipients(
                             Message.RecipientType.TO,
-                            InternetAddress.parse(person.getEmail())
+                            InternetAddress.parse(people[i].getEmail())
                     );
                     message.setSubject(campaign.getTemplate().getSubject());
                     message.setContent(campaign.getTemplate().getBody(), "text/html");
 
                     //Transport.send(message);
                     System.out.println("Sending message");
-                    person.setEmailStatus(EmailStatus.SENT);
+                    people[i].setEmailStatus(EmailStatus.SENT);
                     sentCount ++;
                     campaign.getEmailStatistics().setSentEmailsCount(sentCount);
 
@@ -89,7 +91,7 @@ public class EmailSender implements Runnable {
             } catch (MessagingException e) {
                 e.printStackTrace();
                 rejectedCount ++;
-                person.setEmailStatus(EmailStatus.REJECTED);
+                people[i].setEmailStatus(EmailStatus.REJECTED);
                 campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
             }catch (InterruptedException e){
                 e.printStackTrace();
