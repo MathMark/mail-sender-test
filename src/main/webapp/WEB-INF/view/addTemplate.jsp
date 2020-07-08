@@ -24,12 +24,28 @@
         #signature{
             height: 20%;
         }
+        .error{
+            color: red;
+        }
+        .errorLabel{
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
 <form:form modelAttribute="templateAttribute" action="saveTemplate" method="post" enctype="multipart/form-data">
     <div class="templateContainer">
         <h2>Template</h2>
+        <div class="errorLabel"><form:errors path="title" cssClass="error"/></div>
+        <div class="templateElement">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Template name</span>
+                </div>
+                <form:input cssClass="form-control" path="title"/>
+            </div>
+        </div>
+        <div class="errorLabel"><form:errors path="subject" cssClass="error"/></div>
         <div class="templateElement">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -38,6 +54,7 @@
                 <form:input cssClass="form-control" path="subject"/>
             </div>
         </div>
+        <div class="errorLabel"><form:errors path="body" cssClass="error"/></div>
         <div class="templateElement">
             <form:textarea path="body" cssClass="form-control" id="body" placeholder="Email body"/>
         </div>

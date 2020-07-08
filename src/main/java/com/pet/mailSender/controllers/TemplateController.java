@@ -1,16 +1,15 @@
 package com.pet.mailSender.controllers;
 
 import com.pet.mailSender.model.Template;
-import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,11 @@ public class TemplateController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveTemplate")
-    public String saveCampaign(@ModelAttribute("templateAttribute") Template template) {
+    public String saveCampaign(@ModelAttribute("templateAttribute") @Validated Template template,
+                               BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "addTemplate";
+        }
         templateService.save(template);
         return "redirect:/templates";
     }

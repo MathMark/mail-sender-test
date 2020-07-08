@@ -3,6 +3,7 @@ package com.pet.mailSender.model;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -12,24 +13,22 @@ public class Template implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
+    
+    @NotEmpty(message = "{title.empty}")
+    @Column(nullable = false, unique = true)
+    @Getter @Setter private String title;
 
-    @Getter
-    @Setter
-    private String title;
+    @NotEmpty(message = "{subject.empty}")
+    @Size(max = 80, message = "{subject.toolong}")
+    @Column(nullable = false)
+    @Getter @Setter private String subject;
 
-    @Getter
-    @Setter
-    private String subject;
+    @NotEmpty(message = "{body.empty}")
+    @Column(columnDefinition = "TEXT", nullable = false) //mysql type
+    @Getter @Setter private String body;
 
-    @Getter
-    @Setter
-    @Column(columnDefinition = "TEXT") //mysql type
-    private String body;
-
-    @Getter
-    @Setter
     @Column(columnDefinition = "TEXT")//mysql type
-    private String signature;
+    @Getter @Setter private String signature;
 
     @OneToMany(mappedBy = "template")
     private Set<Campaign> campaigns;

@@ -20,7 +20,7 @@ out/
 *.iml
 *.ipr
 *.bat
-*.properties
+gmailAuth.properties
 *.bin
 *.lock
 *.jar
