@@ -7,7 +7,8 @@ import com.pet.mailSender.service.parsers.csvParser.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class CampaignMapperImpl implements CampaignMapper {
@@ -30,9 +31,9 @@ public class CampaignMapperImpl implements CampaignMapper {
         emailStatistics.setCampaignStatus(CampaignStatus.NEW);
         campaign.setEmailStatistics(emailStatistics);
 
-        PeopleList peopleList = getPeopleList(campaignView);
+        Set<Person> peopleList = getPeopleList(campaignView);
         if(peopleList != null){
-            campaign.setPeopleList(peopleList);
+            campaign.addPeople(peopleList);
         }
 
         return campaign;
@@ -44,15 +45,11 @@ public class CampaignMapperImpl implements CampaignMapper {
         return null;
     }
 
-    private PeopleList getPeopleList(CampaignView campaignView){
-        List<Person> people;
+    private Set<Person> getPeopleList(CampaignView campaignView){
         try {
-            people = personParser.getJavaObjects(campaignView.getPeopleList().getInputStream(), Person.class);
-            PeopleList peopleList = new PeopleList();
-            peopleList.setTitle(campaignView.getTitle() + "-peopleList");
-            peopleList.getPeople().addAll(people);
-
-            return peopleList;
+            return new HashSet<>(personParser.getJavaObjects
+                    (campaignView.getPeopleList().getInputStream(), Person.class)
+            );
 
         } catch (IOException e) {
             e.printStackTrace();

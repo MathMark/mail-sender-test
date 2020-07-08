@@ -1,10 +1,11 @@
 package com.pet.mailSender.model;
 
-import com.pet.mailSender.model.enums.CampaignStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Campaign implements Serializable {
@@ -22,11 +23,15 @@ public class Campaign implements Serializable {
     @Setter
     private Long delay;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "people_list_id")
     @Getter
     @Setter
-    private PeopleList peopleList;
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.PERSIST)
+    private Set<Person> people = new HashSet<>();
+
+    public void addPeople(Set<Person> people){
+        people.forEach(p -> p.setCampaign(this));
+        this.people = people;
+    }
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "template_id")
@@ -52,7 +57,7 @@ public class Campaign implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", delay=" + delay +
-                ", peopleList=" + peopleList +
+                ", people=" + people +
                 ", template=" + template +
                 ", emailStatistics=" + emailStatistics +
                 ", account=" + account +

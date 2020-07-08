@@ -59,7 +59,7 @@ public class EmailSender implements Runnable {
 
         campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
 
-        for (Person person : campaign.getPeopleList().getPeople()) {
+        for (Person person : campaign.getPeople()) {
             try {
                 EmailStatus emailStatus = person.getEmailStatus();
 
@@ -79,7 +79,7 @@ public class EmailSender implements Runnable {
                     sentCount ++;
                     campaign.getEmailStatistics().setSentEmailsCount(sentCount);
 
-                    campaign.getEmailStatistics().setProgress(progressCalculator.getProgress(campaign.getPeopleList().getPeople().size(),
+                    campaign.getEmailStatistics().setProgress(progressCalculator.getProgress(campaign.getPeople().size(),
                             campaign.getEmailStatistics().getSentEmailsCount()));
 
                     campaignDao.update(campaign);

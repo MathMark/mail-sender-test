@@ -31,10 +31,10 @@ public class Person implements Serializable {
     private String email;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "people_list_id")
+    @JoinColumn(name = "campaign_id")
     @Getter
     @Setter
-    private PeopleList peopleList;
+    private Campaign campaign;
 
     @Enumerated(EnumType.STRING)
     @Getter

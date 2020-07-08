@@ -75,7 +75,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${campaign.peopleList.people}" var="person">
+                <c:forEach items="${campaign.people}" var="person">
                     <tr>
                         <th scope="row"><%=rowNum%>
                         </th>

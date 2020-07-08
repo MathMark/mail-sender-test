@@ -105,7 +105,7 @@
                             </div>
                             <div class="statisticValues">
                                 <div class="statisticValue">
-                                    <c:out value="${campaign.peopleList.people.size()}"/>
+                                    <c:out value="${campaign.people.size()}"/>
                                 </div>
                                 <div class="statisticValue">
                                     <c:out value="${campaign.emailStatistics.sentEmailsCount}"/>
