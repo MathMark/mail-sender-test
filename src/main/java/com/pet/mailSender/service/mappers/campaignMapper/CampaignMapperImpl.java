@@ -1,5 +1,6 @@
 package com.pet.mailSender.service.mappers.campaignMapper;
 
+import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.*;
 import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.viewModels.CampaignView;
@@ -16,6 +17,9 @@ public class CampaignMapperImpl implements CampaignMapper {
     @Autowired
     private Parser<Person> personParser;
 
+    @Autowired
+    private Dao<Template> templateDao;
+
     @Override
     public Campaign getCampaign(CampaignView campaignView) {
         Campaign campaign = new Campaign();
@@ -23,9 +27,7 @@ public class CampaignMapperImpl implements CampaignMapper {
         campaign.setDelay(Long.parseLong(campaignView.getDelay())*1000);
 
         campaign.setAccount(campaignView.getAccount());
-
-        campaignView.getTemplate().setTitle(campaignView.getTitle() + "-template");
-        campaign.setTemplate(campaignView.getTemplate());
+        campaign.setTemplate(templateDao.getById(campaignView.getTemplate().getId()));
 
         EmailStatistics emailStatistics = new EmailStatistics();
         emailStatistics.setCampaignStatus(CampaignStatus.NEW);
@@ -50,7 +52,6 @@ public class CampaignMapperImpl implements CampaignMapper {
             return new HashSet<>(personParser.getJavaObjects
                     (campaignView.getPeopleList().getInputStream(), Person.class)
             );
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package com.pet.mailSender.service.parsers.csvParser;
 
 import com.pet.mailSender.model.annotations.CsvField;
 import org.springframework.stereotype.Component;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.BufferedReader;

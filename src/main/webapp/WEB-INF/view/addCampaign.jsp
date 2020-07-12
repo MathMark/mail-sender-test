@@ -86,6 +86,9 @@
             font-size: small;
             color: #595a59;
         }
+        .error{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -136,20 +139,11 @@
         <div class="templateContainer">
             <h2>Template</h2>
             <div class="templateElement">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Subject</span>
-                    </div>
-                    <form:input cssClass="form-control" path="template.subject"/>
-                </div>
-            </div>
-            <div class="templateElement">
-                <form:textarea path="template.body" cssClass="form-control" placeholder="Email body"/>
-            </div>
-            <div class="templateElement">
-                <div class="templateElement">
-                    <form:textarea path="template.signature" cssClass="form-control" placeholder="Signature"/>
-                </div>
+                <form:select cssClass="custom-select" itemValue="template" path="template.id">
+                    <c:forEach items="${templates}" var="template">
+                        <form:option value="${template.id}" label="${template.title} – ${template.subject}"/>
+                    </c:forEach>
+                </form:select>
             </div>
         </div>
         <div class="campaignReceiversContainer">

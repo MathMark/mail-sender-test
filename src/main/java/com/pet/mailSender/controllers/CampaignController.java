@@ -1,8 +1,10 @@
 package com.pet.mailSender.controllers;
 
 import com.pet.mailSender.model.Campaign;
+import com.pet.mailSender.model.Template;
 import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.CampaignService;
+import com.pet.mailSender.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ public class CampaignController {
     @Autowired
     private CampaignService campaignService;
 
+    @Autowired
+    private TemplateService templateService;
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAllCampaigns(Model model) {
         List<Campaign> campaigns = campaignService.getAll();
@@ -30,13 +35,20 @@ public class CampaignController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/addCampaign")
-    public String viewCampaignForm(Model model) {
-        model.addAttribute("campaignAttribute", new CampaignView());
-        return "addCampaign";
+    public ModelAndView viewCampaignForm(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("campaignAttribute", new CampaignView());
+
+        List<Template> templates = templateService.getAll();
+        modelAndView.addObject("templates", templates);
+
+        modelAndView.setViewName("addCampaign");
+
+        return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveCampaign")
-    public String saveCampaign(@ModelAttribute("campaignAttribute") CampaignView campaignView, @RequestParam("file") MultipartFile file) {
+    public String saveCampaign(@ModelAttribute("campaignAttribute")  @RequestParam("file") MultipartFile file, CampaignView campaignView) {
         campaignView.setPeopleList(file);
         campaignService.saveAsCampaign(campaignView);
         return "redirect:/campaigns";

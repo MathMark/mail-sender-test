@@ -33,8 +33,8 @@ public class Campaign implements Serializable {
         this.people = people;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "template_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "template_id", nullable = false)
     @Getter
     @Setter
     private Template template;
