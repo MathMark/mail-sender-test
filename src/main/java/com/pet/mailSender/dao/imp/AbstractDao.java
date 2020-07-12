@@ -56,11 +56,4 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
         entityManager.getTransaction().commit();
     }
 
-    @Override
-    public T findByValue(Object value){
-        entityManager.getTransaction().begin();
-        T object = entityManager.find(clazz, value);
-        entityManager.getTransaction().commit();
-        return object;
-    }
 }
