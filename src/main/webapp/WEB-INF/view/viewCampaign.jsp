@@ -23,7 +23,21 @@
         .account-card {
             display: inline-block;
         }
-        .co
+        #campaign-status-new{
+            background-color: blueviolet;
+        }
+        #campaign-status-running{
+            background-color: cornflowerblue;
+        }
+        #campaign-status-stopped{
+            background-color: #595a59;
+        }
+        #campaign-status-finished{
+            background-color: forestgreen;
+        }#campaign-status-failed{
+             background-color: darkred;
+         }
+
     </style>
 </head>
 <body>
@@ -32,10 +46,24 @@
         <div class="card-header">
             <div class="campaignTitleComponent">
                 <c:out value="${campaign.title}"/>
-            </div>
-            <div class="control-panel">
-                <a href="#" class="btn btn-primary">Delete</a>
-                <a href="#" class="btn btn-primary">Edit</a>
+                <c:if test="${campaign.emailStatistics.campaignStatus.title == 'New'}">
+                    <span id="campaign-status-new" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                </c:if>
+                <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Running'}">
+                    <span id="campaign-status-running" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                </c:if>
+                <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Stopped'}">
+                    <span id="campaign-status-stopped" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                </c:if>
+                <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Finished'}">
+                    <span id="campaign-status-finished" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                </c:if>
+                <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Failed'}">
+                    <span id="campaign-status-failed" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                </c:if>
+                <span class="badge badge-primary">All: <c:out value="${campaign.people.size()}"/></span>
+                <span class="badge badge-primary">Sent: <c:out value="${campaign.emailStatistics.sentEmailsCount}"/></span>
+                <span class="badge badge-primary">Rejected: <c:out value="${campaign.emailStatistics.rejectedEmailsCount}"/></span>
             </div>
         </div>
         <div class="card-body">

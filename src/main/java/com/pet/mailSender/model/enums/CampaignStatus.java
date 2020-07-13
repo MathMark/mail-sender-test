@@ -7,6 +7,8 @@ import java.util.Map;
 public enum CampaignStatus {
     NEW("New"),
     RUNNING("Running"),
+    STOPPED("Stopped"),
+    FAILED("Failed"),
     FINISHED("Finished");
 
     private String title;
@@ -28,5 +30,9 @@ public enum CampaignStatus {
 
     public CampaignStatus fromString(String title){
         return statusMap.get(title);
+    }
+
+    public String getTitle(){
+        return this.title;
     }
 }
