@@ -23,6 +23,7 @@
         .account-card {
             display: inline-block;
         }
+        .co
     </style>
 </head>
 <body>
@@ -31,6 +32,10 @@
         <div class="card-header">
             <div class="campaignTitleComponent">
                 <c:out value="${campaign.title}"/>
+            </div>
+            <div class="control-panel">
+                <a href="#" class="btn btn-primary">Delete</a>
+                <a href="#" class="btn btn-primary">Edit</a>
             </div>
         </div>
         <div class="card-body">
@@ -88,7 +93,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>
