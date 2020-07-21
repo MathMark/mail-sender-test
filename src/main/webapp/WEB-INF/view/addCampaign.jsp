@@ -149,7 +149,7 @@
         <div class="campaignReceiversContainer">
             <div class="campaignBottomElement">
                 <label>Receivers: </label>
-                <input type="file" name="file"/>
+                <input name="file" type="file"/>
             </div>
             <div class="campaignBottomElement">
                 <div class="form-group">

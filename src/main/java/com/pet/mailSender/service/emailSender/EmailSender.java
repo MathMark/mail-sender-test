@@ -1,6 +1,7 @@
 package com.pet.mailSender.service.emailSender;
 
 import com.pet.mailSender.dao.Dao;
+import com.pet.mailSender.model.Account;
 import com.pet.mailSender.model.Campaign;
 import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.enums.EmailStatus;
@@ -76,6 +77,7 @@ public class EmailSender implements Runnable {
                     message.setContent(campaign.getTemplate().getBody(), "text/html");
 
                     //Transport.send(message);
+
                     System.out.println("Sending message");
                     people[i].setEmailStatus(EmailStatus.SENT);
                     sentCount ++;
@@ -104,5 +106,24 @@ public class EmailSender implements Runnable {
     @Override
     public void run() {
         sendEmails();
+    }
+
+    public boolean validateCredentials(Account account){
+        Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(account.getEmail(), account.getPassword());
+                    }
+                });
+        Transport transport;
+
+        try {
+            transport = session.getTransport("smtp");
+            transport.connect();
+        } catch (MessagingException e) {
+            return false;
+        }
+
+        return true;
     }
 }

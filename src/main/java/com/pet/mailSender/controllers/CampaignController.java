@@ -48,7 +48,7 @@ public class CampaignController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveCampaign")
-    public String saveCampaign(@ModelAttribute("campaignAttribute")  @RequestParam("file") MultipartFile file, CampaignView campaignView) {
+    public String saveCampaign(@ModelAttribute("campaignAttribute") CampaignView campaignView,  @RequestParam("file") MultipartFile file) {
         campaignView.setPeopleList(file);
         campaignService.saveAsCampaign(campaignView);
         return "redirect:/campaigns";

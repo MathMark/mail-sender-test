@@ -5,7 +5,9 @@
     <jsp:include page="header.jsp"/>
 </head>
 <body>
-
+<div class="campaignControlPanel">
+    <button type="button" class="btn btn-primary" onclick="location.href='accounts/addAccount'">Add account</button>
+</div>
 <%int rowNum = 1;%>
 <table class="table">
     <thead class="thead-dark">

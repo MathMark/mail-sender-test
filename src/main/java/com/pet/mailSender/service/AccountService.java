@@ -19,4 +19,12 @@ public class AccountService {
         return accountDao.getAll();
     }
 
+    public Account getAccount(int id){
+        return accountDao.getById(id);
+    }
+
+    public void save(Account account){
+        accountDao.add(account);
+    }
+
 }
