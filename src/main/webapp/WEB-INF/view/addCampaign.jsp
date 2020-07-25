@@ -46,27 +46,6 @@
             background-color: white;
             font-size: medium;
         }
-
-        .accountFirstAndLastName {
-            width: 100%;
-            display: inline-block;
-        }
-
-        .accountCredentials {
-            width: 100%;
-        }
-
-        .accountCredential {
-            display: inline-block;
-            width: 49%;
-        }
-
-        .accountNameElement {
-            display: inline-block;
-            width: 49%;
-            margin-bottom: 10px;
-        }
-
         .templateElement {
             margin-bottom: 5px;
         }
@@ -105,36 +84,11 @@
         </div>
         <div class="accountContainer">
             <h2>Account</h2>
-            <div class="accountFirstAndLastName">
-                <div class="accountNameElement">
-                    <div class="input-group">
-                        <form:input cssClass="form-control" path="account.firstName" placeHolder="First name"/>
-                    </div>
-                </div>
-                <div class="accountNameElement">
-                    <div class="input-group">
-                        <form:input cssClass="form-control" path="account.lastName" placeHolder="Last name"/>
-                    </div>
-                </div>
-            </div>
-            <div class="accountCredentials">
-                <div class="accountCredential">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Username</span>
-                        </div>
-                        <form:input cssClass="form-control" path="account.email" placeHolder="username@gmail.com"/>
-                    </div>
-                </div>
-                <div class="accountCredential">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Password</span>
-                        </div>
-                        <form:input type="password" cssClass="form-control" path="account.password"/>
-                    </div>
-                </div>
-            </div>
+            <form:select cssClass="custom-select" itemValue="account" path="account.id">
+                <c:forEach items="${accounts}" var="account">
+                    <form:option value="${account.id}" label="${account.firstName} ${account.lastName} : ${account.email}"/>
+                </c:forEach>
+            </form:select>
         </div>
         <div class="templateContainer">
             <h2>Template</h2>

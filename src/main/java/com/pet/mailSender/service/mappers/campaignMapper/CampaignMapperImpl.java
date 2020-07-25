@@ -20,13 +20,16 @@ public class CampaignMapperImpl implements CampaignMapper {
     @Autowired
     private Dao<Template> templateDao;
 
+    @Autowired
+    private Dao<Account> accountDao;
+
     @Override
     public Campaign getCampaign(CampaignView campaignView) {
         Campaign campaign = new Campaign();
         campaign.setTitle(campaignView.getTitle());
         campaign.setDelay(Long.parseLong(campaignView.getDelay())*1000);
 
-        campaign.setAccount(campaignView.getAccount());
+        campaign.setAccount(accountDao.getById(campaignView.getAccount().getId()));
         campaign.setTemplate(templateDao.getById(campaignView.getTemplate().getId()));
 
         EmailStatistics emailStatistics = new EmailStatistics();

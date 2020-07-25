@@ -1,8 +1,10 @@
 package com.pet.mailSender.controllers;
 
+import com.pet.mailSender.model.Account;
 import com.pet.mailSender.model.Campaign;
 import com.pet.mailSender.model.Template;
 import com.pet.mailSender.model.viewModels.CampaignView;
+import com.pet.mailSender.service.AccountService;
 import com.pet.mailSender.service.CampaignService;
 import com.pet.mailSender.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class CampaignController {
     @Autowired
     private TemplateService templateService;
 
+    @Autowired
+    private AccountService accountService;
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAllCampaigns(Model model) {
         List<Campaign> campaigns = campaignService.getAll();
@@ -41,6 +46,9 @@ public class CampaignController {
 
         List<Template> templates = templateService.getAll();
         modelAndView.addObject("templates", templates);
+
+        List<Account> accounts = accountService.getAccounts();
+        modelAndView.addObject("accounts", accounts);
 
         modelAndView.setViewName("addCampaign");
 

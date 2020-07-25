@@ -45,7 +45,7 @@ public class Campaign implements Serializable {
     @Setter
     private EmailStatistics emailStatistics;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id")
     @Getter
     @Setter
