@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,16 +51,20 @@ public class AccountController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveAccount")
-    public ModelAndView testConnection(@ModelAttribute("account") Account account){
+    public ModelAndView testConnection(@ModelAttribute("account") @Validated Account account, BindingResult bindingResult){
         ModelAndView modelAndView = new ModelAndView();
-        boolean isValid = emailSender.validateCredentials(account);
-        if(isValid){
-            accountService.save(account);
-            modelAndView.setViewName("redirect:/accounts");
-        }else{
-            modelAndView.addObject("connectionStatus", "Wrong credentials");
-            modelAndView.addObject("account", account);
+        if(bindingResult.hasErrors()){
             modelAndView.setViewName("addAccount");
+        }else{
+            boolean isValid = emailSender.validateCredentials(account);
+            if(isValid){
+                accountService.save(account);
+                modelAndView.setViewName("redirect:/accounts");
+            }else{
+                modelAndView.addObject("connectionStatus", "Wrong credentials");
+                modelAndView.addObject("account", account);
+                modelAndView.setViewName("addAccount");
+            }
         }
 
         return modelAndView;

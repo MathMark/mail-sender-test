@@ -2,9 +2,9 @@ package com.pet.mailSender.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -19,18 +19,25 @@ public class Account implements Serializable {
 
     @Getter
     @Setter
+    @NotEmpty(message = "{account.firstName.notEmpty}")
+    @Pattern(regexp = "[A-Z][a-z]+", message = "{account.firstName.notValid}")
     private String firstName;
 
     @Getter
     @Setter
+    @NotEmpty(message = "{account.lastName.notEmpty}")
+    @Pattern(regexp = "[A-Z][a-z]+", message = "{account.lastName.notValid}")
     private String lastName;
 
     @Getter
     @Setter
+    @Pattern(regexp = "[a-zA-Z0-9\\._-]+@[a-zA-Z0-9\\._-]+\\.[a-zA-Z0-9\\._-]+", message = "{account.email.noAt}")
+    @Column(unique = true)
     private String email;
 
     @Getter
     @Setter
+    @NotEmpty(message = "{account.password.notEmpty}")
     private String password;
 
     @OneToMany(mappedBy = "account")
@@ -43,15 +50,12 @@ public class Account implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return firstName.equals(account.firstName) &&
-                lastName.equals(account.lastName) &&
-                email.equals(account.email) &&
-                password.equals(account.password);
+        return email.equals(account.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, password);
+        return Objects.hash(email);
     }
 
     @Override

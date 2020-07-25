@@ -22,7 +22,10 @@
             text-align: center;
         }
         .accountTitle{
-            display: inline-block;
+            display: block;
+            margin: auto;
+            width: auto;
+            padding: 15px;
         }
     </style>
 
@@ -31,11 +34,15 @@
 <%--TODO--%>
 <form:form modelAttribute="account" action="saveAccount" method="post">
 <div class="accountFromContainer">
+    <h3>Account</h3>
     <div class="accountTitle">
-        <h3>Account</h3>
         <c:if test="${connectionStatus != ''}">
             <span class="badge badge-danger"><c:out value="${connectionStatus}"/></span>
         </c:if>
+        <span class="badge badge-danger"><form:errors path="firstName" cssClass="error"/></span>
+        <span class="badge badge-danger"><form:errors path="lastName" cssClass="error"/></span>
+        <span class="badge badge-danger"><form:errors path="email" cssClass="error"/></span>
+        <span class="badge badge-danger"><form:errors path="password" cssClass="error"/></span>
     </div>
     <div class="row">
         <div class="col">

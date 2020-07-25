@@ -16,18 +16,18 @@ public class Template implements Serializable {
     @Setter
     private Integer id;
 
-    @NotEmpty(message = "{title.empty}")
+    @NotEmpty(message = "{template.title.empty}")
     @Column(nullable = false, unique = true)
     @Getter @Setter private String title;
 
-    @NotEmpty(message = "{subject.empty}")
-    @Size(max = 80, message = "{subject.toolong}")
+    @NotEmpty(message = "{template.subject.empty}")
+    @Size(max = 80, message = "{template.subject.toolong}")
     @Column(nullable = false)
     @Getter
     @Setter
     private String subject;
 
-    @NotEmpty(message = "{body.empty}")
+    @NotEmpty(message = "{template.body.empty}")
     @Column(columnDefinition = "TEXT", nullable = false) //mysql type
     @Getter @Setter private String body;
 
