@@ -55,6 +55,20 @@
             margin: 20px;
             color: #e1e1e1;
         }
+        #campaign-status-new{
+            background-color: blueviolet;
+        }
+        #campaign-status-running{
+            background-color: cornflowerblue;
+        }
+        #campaign-status-stopped{
+            background-color: #595a59;
+        }
+        #campaign-status-finished{
+            background-color: forestgreen;
+        }#campaign-status-failed{
+             background-color: darkred;
+         }
     </style>
 
 </head>
@@ -79,7 +93,22 @@
             <form:form class="tr" modelAttribute="campaignAttribute">
                 <div class="campaignContainer">
                     <div class="card text-white bg-dark mb-3">
-                        <div class="card-header"><c:out value="${campaign.title}"/></div>
+                        <div class="card-header"><c:out value="${campaign.title}"/>
+                            <c:if test="${campaign.emailStatistics.campaignStatus.title == 'New'}">
+                                <span id="campaign-status-new" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                            </c:if>
+                            <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Running'}">
+                                <span id="campaign-status-running" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                            </c:if>
+                            <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Stopped'}">
+                                <span id="campaign-status-stopped" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                            </c:if>
+                            <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Finished'}">
+                                <span id="campaign-status-finished" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                            </c:if>
+                            <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Failed'}">
+                                <span id="campaign-status-failed" class="badge badge-primary"><c:out value="${campaign.emailStatistics.campaignStatus.title}"/></span>
+                            </c:if>
                         <div class="card-body">
                             <h5 class="card-title"></h5>
                             <div class="campaignElement">
@@ -91,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="campaignElement">
-                                <c:out value="${campaign.emailStatistics.campaignStatus}"/>
+                                <p>Progress</p>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: ${campaign.emailStatistics.progress}%" aria-valuenow="${campaign.emailStatistics.progress}" aria-valuemin="0" aria-valuemax="100"><c:out value="${campaign.emailStatistics.progress}"/>%</div>
                                 </div>
