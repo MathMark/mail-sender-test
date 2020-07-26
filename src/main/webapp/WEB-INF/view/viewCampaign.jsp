@@ -6,7 +6,6 @@
     <style>
         .card-body {
             text-align: left;
-            width: fit-content;
             display: inline-block;
         }
 
@@ -67,6 +66,15 @@
             </div>
         </div>
         <div class="card-body">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/campaigns/editCampaign/${campaign.id}">Edit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/campaigns/deleteCampaign/${campaign.id}">Delete</a>
+                </li>
+            </ul>
+
             <div class="card-template-account">
                 <div class="template-card">
                     <div class="card text-white bg-dark mb-3">

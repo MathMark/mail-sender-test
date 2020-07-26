@@ -25,7 +25,7 @@ public class Campaign implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "campaign", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<Person> people = new HashSet<>();
 
     public void addPeople(Set<Person> people){
@@ -39,7 +39,7 @@ public class Campaign implements Serializable {
     @Setter
     private Template template;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "email_statistics_id")
     @Getter
     @Setter

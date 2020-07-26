@@ -3,6 +3,7 @@ package com.pet.mailSender.controllers;
 import com.pet.mailSender.model.Account;
 import com.pet.mailSender.model.Campaign;
 import com.pet.mailSender.model.Template;
+import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.AccountService;
 import com.pet.mailSender.service.CampaignService;
@@ -78,5 +79,17 @@ public class CampaignController {
         modelAndView.setViewName("viewCampaign");
 
         return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteCampaign/{campaignId}")
+    public String deleteCampaign(@PathVariable("campaignId") int campaignId){
+        Campaign campaign = campaignService.getCampaignById(campaignId);
+
+        if(campaign.getEmailStatistics().getCampaignStatus() != CampaignStatus.RUNNING){
+            System.out.println("dfedfg");
+            campaignService.deleteCampaign(campaign);
+        }
+
+        return "redirect:/campaigns";
     }
 }

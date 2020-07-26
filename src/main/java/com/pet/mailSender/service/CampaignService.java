@@ -35,11 +35,14 @@ public class CampaignService {
         campaignDao.add(campaign);
     }
 
+    public void deleteCampaign(Campaign campaign){
+        campaignDao.delete(campaign);
+    }
+
     public void saveAsCampaign(CampaignView campaignView){
         Campaign campaign = campaignMapper.getCampaign(campaignView);
         save(campaign);
     }
-
 
     public void runCampaignParallel(int campaignId){
         Campaign campaign = campaignDao.getById(campaignId);
@@ -49,4 +52,5 @@ public class CampaignService {
             thread.start();
         }
     }
+
 }
