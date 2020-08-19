@@ -2,6 +2,7 @@ package com.pet.mailSender.service;
 
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
+import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.emailSender.EmailSender;
 import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapper;
@@ -22,6 +23,8 @@ public class CampaignService {
 
     @Autowired
     private EmailSender emailSender;
+
+    private Thread emailSenderThread;
 
     public List<Campaign> getAll(){
         return campaignDao.getAll();
@@ -47,9 +50,22 @@ public class CampaignService {
     public void runCampaignParallel(int campaignId){
         Campaign campaign = campaignDao.getById(campaignId);
         if(campaign != null){
+            campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
+            campaignDao.update(campaign);
             emailSender.setCampaign(campaign);
-            Thread thread = new Thread(emailSender);
-            thread.start();
+            emailSenderThread = new Thread(emailSender);
+            emailSenderThread.start();
+        }
+    }
+
+    public void stopCampaign(int campaignId){
+        Campaign campaign = campaignDao.getById(campaignId);
+        if(campaign != null){
+            if(emailSenderThread != null && emailSenderThread.isAlive()){
+                campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
+                campaignDao.update(campaign);
+                emailSenderThread.interrupt();
+            }
         }
     }
 

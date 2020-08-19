@@ -113,7 +113,12 @@
                             <h5 class="card-title"></h5>
                             <div class="campaignElement">
                                 <div class="campaignElement">
-                                    <button type="button" class="btn btn-light" onclick="location.href='campaigns/run/${campaign.id}'">Run</button>
+                                    <c:if test="${campaign.emailStatistics.campaignStatus.title == 'New' || campaign.emailStatistics.campaignStatus.title == 'Stopped'}">
+                                        <button type="button" class="btn btn-light" onclick="location.href='campaigns/run/${campaign.id}'">Run</button>
+                                    </c:if>
+                                    <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Running'}">
+                                        <button type="button" class="btn btn-light" onclick="location.href='campaigns/stop/${campaign.id}'">Stop</button>
+                                    </c:if>
                                 </div>
                                 <div class="campaignTitleElement">
                                     <button type="button" class="btn btn-light" onclick="location.href='campaigns/view/${campaign.id}'">View</button>

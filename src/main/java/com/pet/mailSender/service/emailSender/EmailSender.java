@@ -57,8 +57,6 @@ public class EmailSender implements Runnable {
         int sentCount = 0;
         int rejectedCount = 0;
 
-        campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
-
         Person[] people = new Person[campaign.getPeople().size()];
         campaign.getPeople().toArray(people);
 
@@ -96,7 +94,8 @@ public class EmailSender implements Runnable {
                 people[i].setEmailStatus(EmailStatus.REJECTED);
                 campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
             }catch (InterruptedException e){
-                e.printStackTrace();
+                //e.printStackTrace();
+                    Thread.currentThread().interrupt();
             }
 
         }

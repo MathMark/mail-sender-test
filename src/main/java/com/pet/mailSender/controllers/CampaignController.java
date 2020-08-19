@@ -65,8 +65,13 @@ public class CampaignController {
 
     @RequestMapping(value = "/run/{campaignId}")
     public String runCampaign(@PathVariable("campaignId") int campaignId, Model model){
-        System.out.println(campaignId);
         campaignService.runCampaignParallel(campaignId);
+        return "redirect:/campaigns";
+    }
+
+    @RequestMapping(value = "/stop/{campaignId}")
+    public String stopCampaign(@PathVariable("campaignId") int campaignId, Model model){
+        campaignService.stopCampaign(campaignId);
         return "redirect:/campaigns";
     }
 
@@ -86,7 +91,6 @@ public class CampaignController {
         Campaign campaign = campaignService.getCampaignById(campaignId);
 
         if(campaign.getEmailStatistics().getCampaignStatus() != CampaignStatus.RUNNING){
-            System.out.println("dfedfg");
             campaignService.deleteCampaign(campaign);
         }
 
