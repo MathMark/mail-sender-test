@@ -62,8 +62,6 @@ public class CampaignService {
         Campaign campaign = campaignDao.getById(campaignId);
         if(campaign != null){
             if(emailSenderThread != null && emailSenderThread.isAlive()){
-                campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
-                campaignDao.update(campaign);
                 emailSenderThread.interrupt();
             }
         }

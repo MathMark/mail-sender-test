@@ -40,7 +40,6 @@ public class EmailSender implements Runnable {
         properties.put("mail.smtp.starttls.enable", "true"); //TLS
     }
 
-
     @Getter
     @Setter
     private Campaign campaign;
@@ -54,52 +53,67 @@ public class EmailSender implements Runnable {
                     }
                 });
 
-        int sentCount = 0;
-        int rejectedCount = 0;
+        campaign.getPeople();
+
+        int sentCount = (int)campaign.getPeople().stream().filter(p -> p.getEmailStatus().equals(EmailStatus.SENT)).count();
+        int rejectedCount = (int)campaign.getPeople().stream().filter(p -> p.getEmailStatus().equals(EmailStatus.REJECTED)).count();
+        boolean isStopped = false;
 
         Person[] people = new Person[campaign.getPeople().size()];
         campaign.getPeople().toArray(people);
 
-        for (int i = 0; i < people.length; i++) {
-                try {
-                EmailStatus emailStatus = people[i].getEmailStatus();
-
-                if(emailStatus == null || (!emailStatus.equals(EmailStatus.SENT))){
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
-                    message.setRecipients(
-                            Message.RecipientType.TO,
-                            InternetAddress.parse(people[i].getEmail())
-                    );
-                    message.setSubject(campaign.getTemplate().getSubject());
-                    message.setContent(campaign.getTemplate().getBody(), "text/html");
-
-                    //Transport.send(message);
-
-                    System.out.println("Sending message");
-                    people[i].setEmailStatus(EmailStatus.SENT);
-                    sentCount ++;
-                    campaign.getEmailStatistics().setSentEmailsCount(sentCount);
-
-                    campaign.getEmailStatistics().setProgress(progressCalculator.getProgress(campaign.getPeople().size(),
-                            campaign.getEmailStatistics().getSentEmailsCount()));
-
+        try{
+            for (int i = 0; i < people.length; i++) {
+                if(Thread.currentThread().isInterrupted()){
+                    campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
                     campaignDao.update(campaign);
-                    Thread.sleep(campaign.getDelay());
+                    isStopped = true;
+                    break;
+                }
+                try {
+                    EmailStatus emailStatus = people[i].getEmailStatus();
+
+                    if(emailStatus == null || (!emailStatus.equals(EmailStatus.SENT))){
+                        Message message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(campaign.getAccount().getEmail()));
+                        message.setRecipients(
+                                Message.RecipientType.TO,
+                                InternetAddress.parse(people[i].getEmail())
+                        );
+                        message.setSubject(campaign.getTemplate().getSubject());
+                        message.setContent(campaign.getTemplate().getBody(), "text/html");
+
+                        Transport.send(message);
+
+                        System.out.println("Sending message");
+                        people[i].setEmailStatus(EmailStatus.SENT);
+                        sentCount ++;
+                        campaign.getEmailStatistics().setSentEmailsCount(sentCount);
+
+                        campaign.getEmailStatistics().setProgress(progressCalculator.getProgress(campaign.getPeople().size(),
+                                campaign.getEmailStatistics().getSentEmailsCount()));
+
+                        campaignDao.update(campaign);
+                        Thread.sleep(campaign.getDelay());
+                    }
+
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                    rejectedCount ++;
+                    people[i].setEmailStatus(EmailStatus.REJECTED);
+                    campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
                 }
 
-            } catch (MessagingException e) {
-                e.printStackTrace();
-                rejectedCount ++;
-                people[i].setEmailStatus(EmailStatus.REJECTED);
-                campaign.getEmailStatistics().setRejectedEmailsCount(rejectedCount);
-            }catch (InterruptedException e){
-                //e.printStackTrace();
-                    Thread.currentThread().interrupt();
             }
-
+        }catch (InterruptedException e){
+            campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
+            campaignDao.update(campaign);
+            isStopped = true;
         }
-        campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.FINISHED);
+
+        if(!isStopped){
+            campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.FINISHED);
+        }
     }
 
     @Override
@@ -120,6 +134,7 @@ public class EmailSender implements Runnable {
             transport = session.getTransport("smtp");
             transport.connect();
         } catch (MessagingException e) {
+            e.printStackTrace();
             return false;
         }
 
