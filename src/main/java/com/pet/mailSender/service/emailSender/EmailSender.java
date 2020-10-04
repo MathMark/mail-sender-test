@@ -53,8 +53,6 @@ public class EmailSender implements Runnable {
                     }
                 });
 
-        campaign.getPeople();
-
         int sentCount = (int)campaign.getPeople().stream().filter(p -> p.getEmailStatus().equals(EmailStatus.SENT)).count();
         int rejectedCount = (int)campaign.getPeople().stream().filter(p -> p.getEmailStatus().equals(EmailStatus.REJECTED)).count();
         boolean isStopped = false;
@@ -62,10 +60,12 @@ public class EmailSender implements Runnable {
         Person[] people = new Person[campaign.getPeople().size()];
         campaign.getPeople().toArray(people);
 
+        campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
         try{
             for (int i = 0; i < people.length; i++) {
                 if(Thread.currentThread().isInterrupted()){
                     campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
+                    System.out.println(campaign.getTitle() + " " + campaign.getEmailStatistics().getCampaignStatus());
                     campaignDao.update(campaign);
                     isStopped = true;
                     break;
@@ -107,6 +107,7 @@ public class EmailSender implements Runnable {
             }
         }catch (InterruptedException e){
             campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.STOPPED);
+            System.out.println(campaign.getTitle() + " " + campaign.getEmailStatistics().getCampaignStatus());
             campaignDao.update(campaign);
             isStopped = true;
         }

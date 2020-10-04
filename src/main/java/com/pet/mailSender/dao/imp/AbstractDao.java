@@ -25,7 +25,7 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
     }
 
     @Override
-    public void add(T entity) {
+    public synchronized void add(T entity) {
         if(!entityManager.getTransaction().isActive()){
             try{
                 entityManager.getTransaction().begin();
@@ -40,7 +40,7 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
     }
 
     @Override
-    public List<T> getAll() {
+    public synchronized List<T> getAll() {
         List<T> result = new ArrayList<>();
         if(!entityManager.getTransaction().isActive()) {
             try{
@@ -56,7 +56,7 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
     }
 
     @Override
-    public T getById(int id) {
+    public synchronized T getById(int id) {
         T object = null;
         if(!entityManager.getTransaction().isActive()){
             try{
@@ -72,7 +72,7 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
     }
 
     @Override
-    public T update(T entity) {
+    public synchronized T update(T entity) {
         T object = null;
         if(!entityManager.getTransaction().isActive()) {
             try{
@@ -88,7 +88,7 @@ public abstract class AbstractDao <T extends Serializable> implements Dao<T> {
     }
 
     @Override
-    public void delete(T entity) {
+    public synchronized void delete(T entity) {
         if(!entityManager.getTransaction().isActive()) {
             try{
                 entityManager.getTransaction().begin();

@@ -2,14 +2,14 @@ package com.pet.mailSender.service;
 
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.model.Campaign;
-import com.pet.mailSender.model.enums.CampaignStatus;
 import com.pet.mailSender.model.viewModels.CampaignView;
 import com.pet.mailSender.service.emailSender.EmailSender;
 import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapper;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CampaignService {
@@ -22,9 +22,9 @@ public class CampaignService {
     private CampaignMapper campaignMapper;
 
     @Autowired
-    private EmailSender emailSender;
+    private ObjectFactory<EmailSender> objectFactory;
 
-    private Thread emailSenderThread;
+    private Map<Integer, Thread> threadMap = new HashMap<>();
 
     public List<Campaign> getAll(){
         return campaignDao.getAll();
@@ -50,19 +50,20 @@ public class CampaignService {
     public void runCampaignParallel(int campaignId){
         Campaign campaign = campaignDao.getById(campaignId);
         if(campaign != null){
-            campaign.getEmailStatistics().setCampaignStatus(CampaignStatus.RUNNING);
-            campaignDao.update(campaign);
-            emailSender.setCampaign(campaign);
-            emailSenderThread = new Thread(emailSender);
-            emailSenderThread.start();
+            EmailSender e = objectFactory.getObject();
+            e.setCampaign(campaign);
+            Thread thread = new Thread(e);
+            threadMap.put(e.getCampaign().getId(), thread);
+            thread.start();
         }
     }
 
     public void stopCampaign(int campaignId){
         Campaign campaign = campaignDao.getById(campaignId);
         if(campaign != null){
-            if(emailSenderThread != null && emailSenderThread.isAlive()){
-                emailSenderThread.interrupt();
+            Thread thread = threadMap.remove(campaignId);
+            if(thread != null && !thread.isInterrupted()){
+                thread.interrupt();
             }
         }
     }
