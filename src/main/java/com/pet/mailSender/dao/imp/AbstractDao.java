@@ -1,10 +1,7 @@
 package com.pet.mailSender.dao.imp;
 
 import com.pet.mailSender.dao.Dao;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
-import sun.rmi.transport.Transport;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

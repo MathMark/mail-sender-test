@@ -33,14 +33,6 @@
         .campaignControlPanel{
             right: 10px;
         }
-        /*#progress-bar{
-            width: 10%;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        #controlButtons{
-            width: 10%;
-        }*/
         .noCampaignsContainer{
             text-align: center;
             border-style: solid;
@@ -114,14 +106,14 @@
                             <div class="campaignElement">
                                 <div class="campaignElement">
                                     <c:if test="${campaign.emailStatistics.campaignStatus.title == 'New' || campaign.emailStatistics.campaignStatus.title == 'Stopped'}">
-                                        <button type="button" class="btn btn-light" onclick="location.href='campaigns/run/${campaign.id}'">Run</button>
+                                        <button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/campaigns/run/${campaign.id}'">Run</button>
                                     </c:if>
                                     <c:if test="${campaign.emailStatistics.campaignStatus.title == 'Running'}">
-                                        <button type="button" class="btn btn-light" onclick="location.href='campaigns/stop/${campaign.id}'">Stop</button>
+                                        <button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/campaigns/stop/${campaign.id}'">Stop</button>
                                     </c:if>
                                 </div>
                                 <div class="campaignTitleElement">
-                                    <button type="button" class="btn btn-light" onclick="location.href='campaigns/view/${campaign.id}'">View</button>
+                                    <button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/campaigns/view/${campaign.id}'">View</button>
                                 </div>
                             </div>
                             <div class="campaignElement">
@@ -182,6 +174,15 @@
                 </div>
             </form:form>
         </c:forEach>
+                    <div class="pagination">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${pageCount}">
+                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/campaigns/${i}"><c:out value="${i}"/></a></li>
+                                </c:forEach>
+                            </ul>
+                        </nav>
+                    </div>
         <div class="campaignControlPanel">
             <button type="button" class="btn btn-primary" onclick="location.href='campaigns/addCampaign'">Create campaign</button>
         </div>

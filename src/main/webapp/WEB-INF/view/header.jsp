@@ -37,16 +37,16 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/accounts">Accounts</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/accounts">Accounts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/campaigns">Campaigns</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/campaigns/1">Campaigns</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/templates">Templates</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/templates">Templates</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/peopleList">Receivers</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/peopleList">Receivers</a>
             </li>
         </ul>
     </div>
