@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-@Component
 public class CsvParser<T> implements Parser<T> {
 
     private static final String COMMA = ",";

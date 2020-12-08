@@ -184,7 +184,7 @@
                         </nav>
                     </div>
         <div class="campaignControlPanel">
-            <button type="button" class="btn btn-primary" onclick="location.href='campaigns/addCampaign'">Create campaign</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/campaigns/addCampaign'">Create campaign</button>
         </div>
     </c:if>
 </div>

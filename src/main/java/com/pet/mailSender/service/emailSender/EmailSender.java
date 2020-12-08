@@ -19,25 +19,22 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.*;
 
-@Service
-@Scope("prototype")
 public class EmailSender implements Runnable {
 
     private Properties properties;
 
-    @Autowired
-    @Qualifier("campaignDao")
     private Dao<Campaign> campaignDao;
 
-    @Autowired
     private ProgressCalculator progressCalculator;
 
-    public EmailSender() {
+    public EmailSender(Dao<Campaign> campaignDao, ProgressCalculator progressCalculator) {
         properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true"); //TLS
+        this.campaignDao = campaignDao;
+        this.progressCalculator = progressCalculator;
     }
 
     @Getter

@@ -11,17 +11,19 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
 public class CampaignMapperImpl implements CampaignMapper {
 
-    @Autowired
     private Parser<Person> personParser;
 
-    @Autowired
     private Dao<Template> templateDao;
 
-    @Autowired
     private Dao<Account> accountDao;
+
+    public CampaignMapperImpl(Dao<Template> templateDao, Dao<Account> accountDao, Parser<Person> personParser) {
+        this.templateDao = templateDao;
+        this.accountDao = accountDao;
+        this.personParser = personParser;
+    }
 
     @Override
     public Campaign getCampaign(CampaignView campaignView) {

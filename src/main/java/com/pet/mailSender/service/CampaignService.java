@@ -11,18 +11,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
-@Service
 public class CampaignService {
 
-    @Autowired
-    @Qualifier("campaignDao")
     private Dao<Campaign> campaignDao;
 
-    @Autowired
     private CampaignMapper campaignMapper;
 
     @Autowired
     private ObjectFactory<EmailSender> objectFactory;
+
+    public CampaignService(Dao<Campaign> campaignDao, CampaignMapper campaignMapper) {
+        this.campaignDao = campaignDao;
+        this.campaignMapper = campaignMapper;
+    }
 
     private Map<Integer, Thread> threadMap = new HashMap<>();
 
