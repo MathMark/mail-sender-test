@@ -1,5 +1,6 @@
 package com.pet.mailSender.config;
 
+import com.pet.mailSender.config.properties.MailProperties;
 import com.pet.mailSender.dao.Dao;
 import com.pet.mailSender.dao.imp.AccountDao;
 import com.pet.mailSender.dao.imp.CampaignDao;
@@ -18,11 +19,13 @@ import com.pet.mailSender.service.mappers.campaignMapper.CampaignMapperImpl;
 import com.pet.mailSender.service.parsers.csvParser.CsvParser;
 import com.pet.mailSender.service.parsers.csvParser.Parser;
 import com.pet.mailSender.service.utilities.ProgressCalculator;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
+@EnableConfigurationProperties(MailProperties.class)
 public class ApplicationConfiguration {
 
     @Bean
@@ -78,7 +81,9 @@ public class ApplicationConfiguration {
 
     @Bean
     @Scope("prototype")
-    public EmailSender emailSender(Dao<Campaign> campaignDao, ProgressCalculator progressCalculator) {
-        return new EmailSender(campaignDao, progressCalculator);
+    public EmailSender emailSender(Dao<Campaign> campaignDao,
+                                   ProgressCalculator progressCalculator,
+                                   MailProperties mailProperties) {
+        return new EmailSender(campaignDao, progressCalculator, mailProperties);
     }
 }

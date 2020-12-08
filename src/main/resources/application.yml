@@ -1,0 +1,6 @@
+mail-sender:
+  mail-config:
+    host: smtp.gmail.com
+    port: 587
+    auth: true
+    starttls: true

@@ -55,7 +55,10 @@ public class CampaignController {
     @RequestMapping(method = RequestMethod.GET, value = "/{pageId}")
     public ModelAndView getAllCampaigns(@PathVariable int pageId, Model model) {
         List<List<Campaign>> pages = getCampaignsPages();
-        List<Campaign> campaigns = pages.get(pageId - 1);
+        List<Campaign> campaigns = new ArrayList<>();
+        if(pages.size() != 0) {
+            campaigns = pages.get(pageId - 1);
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("campaigns", campaigns);
