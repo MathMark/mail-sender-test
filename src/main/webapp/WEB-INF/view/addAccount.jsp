@@ -69,7 +69,7 @@
     <div class="row">
         <div class="col">
             <div class="campaignControlPanel">
-                <button type="submit" class="btn btn-primary">Test
+                <button type="submit" class="btn btn-primary">com.pet.mailSender.Test
                     connection and save account
                 </button>
             </div>
